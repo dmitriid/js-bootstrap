@@ -1,0 +1,60 @@
+{
+  "name": "js-bootstrap",
+  "version": "0.0.1",
+  "description": "Yet Another Effing JS Build Tools Bootstrap",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Keyflow/web-social"
+  },
+  "keywords": [],
+  "author": "Dmitrii Dimandt <dmitrii@dmitriid.com> (http://dmitriid.com)",
+  "license": "APL",
+  "devDependencies": {
+    "babel-core": "^6.9.1",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "chai": "^3.5.0",
+    "chokidar": "^1.5.1",
+    "cli-color": "^1.1.0",
+    "cssnano": "^3.6.2",
+    "es6-promise": "^3.2.1",
+    "eslint": "^2.11.1",
+    "eslint-plugin-promise": "^1.3.1",
+    "eslint-plugin-react": "^5.1.1",
+    "eslint-plugin-standard": "^1.3.2",
+    "eslint-watch": "^2.1.11",
+    "filesize": "^3.3.0",
+    "jsdom": "^9.2.1",
+    "mocha": "^2.5.3",
+    "nconf": "^0.8.4",
+    "node-getopt": "^0.2.3",
+    "parallelshell": "^2.0.0",
+    "sinon": "^1.17.4",
+    "stylus": "^0.54.5",
+    "uglify-js": "^2.6.2",
+    "webpack": "^1.13.1"
+  },
+  "config": {
+    "dist": "./dist",
+    "src": "./src",
+    "assets": "./assets"
+  },
+  "scripts": {
+    "clean": "rm -rf $npm_package_config_dist/*",
+    "dev": "BUILD=dev npm run build",
+    "stage": "BUILD=stage npm run build",
+    "prod": "BUILD=prod npm run build",
+    "build": "parallelshell 'npm run webpack' 'npm run css'",
+    "watch": "BUILD=dev parallelshell 'npm run webpack -- -w' 'npm run lint:watch' 'npm run css:watch'",
+    "webpack": "ENTRY=$npm_package_config_src/js/index.js OUT=$npm_package_config_dist webpack --config webpack.config.js --progress --display-reasons",
+    "css": "ENTRY=$npm_package_config_src/assets/css OUT=$npm_package_config_dist/assets/css node ./build_css",
+    "css:watch": "npm run css -- -w",
+    "lint": "eslint -c .eslintrc --ignore-path .eslintignore \"$npm_package_config_src/**/*.js\"",
+    "lint:watch": "esw -c .eslintrc --ignore-path .eslintignore -w \"$npm_package_config_src/**/*.js\"",
+    "prestage": "npm run lint",
+    "preprod": "npm run lint -- --max-warnings 10"
+  }
+}
