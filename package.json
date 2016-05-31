@@ -50,7 +50,7 @@
     "build": "npm run clean && parallelshell 'npm run webpack' 'npm run css'",
     "watch": "BUILD=dev parallelshell 'npm run webpack -- -w' 'npm run lint:watch' 'npm run css:watch'",
     "webpack": "ENTRY=$npm_package_config_src/js/index.js OUT=$npm_package_config_dist/js webpack --config webpack.config.js --progress --display-reasons",
-    "css": "ENTRY=$npm_package_config_src/assets/css OUT=$npm_package_config_dist/assets/css node ./build_css",
+    "css": "mkdir -p $npm_package_config_dist/assets/css && ENTRY=$npm_package_config_src/assets/css OUT=$npm_package_config_dist/assets/css node ./build_css",
     "css:watch": "npm run css -- -w",
     "lint": "eslint -c .eslintrc --ignore-path .eslintignore \"$npm_package_config_src/**/*.js\"",
     "lint:watch": "esw -c .eslintrc --ignore-path .eslintignore -w \"$npm_package_config_src/**/*.js\"",
