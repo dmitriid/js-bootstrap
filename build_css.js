@@ -23,7 +23,7 @@ var inited = false;
 var entry_dir  = process.env.ENTRY;
 var output_dir = process.env.OUT;
 
-var outFile = output_dir + 'css.css';
+var outFile = output_dir + '/css.css';
 
 var opt = require('node-getopt').create([
         ['w', '', 'watch the files'],
@@ -71,6 +71,7 @@ var do_render = function(){
 };
 
 var render = function (filename) {
+  inited = true;
   console.log('Rebuilding ' + filename);
 
   var str = fs.readFileSync(filename);
@@ -104,7 +105,7 @@ watcher
       if (!watch) process.exit(1);
     })
     .on('ready', function(){
-        inited = true;
+        //inited = true;
         do_optimize();
     });
 
