@@ -38,6 +38,13 @@ var optimize = opt.options.o ? true : false;
 var render_stats = function(){
     if(!inited) return;
 
+    try {
+      fs.accessSync(path, fs.F_OK);
+    } catch (e) {
+      if(!watch) process.exit(0);
+      return;
+    }
+
     var stats = fs.statSync(outFile);
     var fileSizeInBytes = stats.size;
     var kb = filesize(fileSizeInBytes, {base: 10, round: 2});
@@ -49,6 +56,13 @@ var render_stats = function(){
 
 var do_optimize = function()
 {
+    try {
+      fs.accessSync(path, fs.F_OK);
+    } catch (e) {
+      if (!watch) process.exit(0);
+      return;
+    }
+
     if (process.env.BUILD !== 'prod' || !optimize || !inited) {
         render_stats();
         return;
@@ -71,7 +85,6 @@ var do_render = function(){
 };
 
 var render = function (filename) {
-  inited = true;
   console.log('Rebuilding ' + filename);
 
   var str = fs.readFileSync(filename);
@@ -105,7 +118,7 @@ watcher
       if (!watch) process.exit(1);
     })
     .on('ready', function(){
-        //inited = true;
+        inited = true;
         do_optimize();
     });
 
